@@ -20,6 +20,7 @@ const users = [...Array(10).keys()].map((val) => {
 
 export const Users = () => {
   const { state } = useLocation();
+  const isAdmin = state ? state.isAdmin : false;
   console.log(state);
 
   return (
@@ -28,7 +29,7 @@ export const Users = () => {
       <SearchInput />
       <SUserArea>
         {users.map((user) => (
-          <UserCard key={user.id} user={user} />
+          <UserCard key={user.id} user={user} isAdmin={isAdmin} />
         ))}
       </SUserArea>
     </SContainer>
