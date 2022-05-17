@@ -2,6 +2,9 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { SearchInput } from "../molecules/SearchInput";
 import { UserCard } from "../organisms/user/UserCard";
+import { SecondaryButton } from "../atoms/button/SecondoryButton";
+import { useContext } from "react";
+import { UserContext } from "../../providers/UserProvider";
 
 const users = [...Array(10).keys()].map((val) => {
   return {
@@ -20,16 +23,19 @@ const users = [...Array(10).keys()].map((val) => {
 
 export const Users = () => {
   const { state } = useLocation();
-  const isAdmin = state ? state.isAdmin : false;
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  const onClickSwitch = () => setUserInfo({ isAdmin: !userInfo.isAdmin });
   console.log(state);
 
   return (
     <SContainer>
       <h2>User List</h2>
       <SearchInput />
+      <br />
+      <SecondaryButton onClick={onClickSwitch}>Switch</SecondaryButton>
       <SUserArea>
         {users.map((user) => (
-          <UserCard key={user.id} user={user} isAdmin={isAdmin} />
+          <UserCard key={user.id} user={user} />
         ))}
       </SUserArea>
     </SContainer>
